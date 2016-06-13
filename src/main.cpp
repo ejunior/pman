@@ -9,7 +9,7 @@
  *  - colocar todos os elementos em uma única lista (atores)
  */
 
-#include <iostream>
+//#include <iostream>
 #include <list>
 #include <stdio.h>
 #include <time.h>
@@ -53,26 +53,18 @@ void colisaoBolas(list<Personagem *> &atores, Parmerinha *player, Bola **bol);
 int main(int argc, char **argv) {
 
     bool tick;
-
     // lista de elementos gráficos em cena
     std::list<Personagem *> atores;
-
     //srand(time(NULL));
     std::srand(std::time(0));
-
     if (!inicializaTudo()) return -1;
-
     // carrega uma imagem
     imagem_botao = BTN_LOGOUT;
-
     // nao precisa use o exit(0);
     //bool sair = false;
-
     // int tecla = 0, mx = 0, my = 0; variáveis não usadas
     ALLEGRO_EVENT evento;
-
     bool redraw = true;
-
     Parmerinha *player = new Parmerinha();
     atores.push_back(player);
 
@@ -118,9 +110,20 @@ int main(int argc, char **argv) {
                         break;
                     case ALLEGRO_KEY_RIGHT: player->trocaDirecao(1);
                         break;
+                    case ALLEGRO_KEY_ENTER: 
+                        if(evento.keyboard.modifiers|ALLEGRO_KEYMOD_ALT ){
+                            auto mode = al_get_display_flags(display);
+                            if(mode|ALLEGRO_WINDOWED){
+                                al_set_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, true);
+                            }else{
+                                al_set_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, false);
+                            }
+                        }    
+                        break;
                     case ALLEGRO_KEY_Q:
                     case ALLEGRO_KEY_ESCAPE:
                         exit(0);
+                        
                 }
             } else if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) // click no mouse
             {
@@ -132,16 +135,14 @@ int main(int argc, char **argv) {
                 redraw = true;
             } else if (evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { // click no mouse
                 exit(0);
-            } else if (evento.type == ALLEGRO_EVENT_TIMER)
+            } else if (evento.type == ALLEGRO_EVENT_TIMER) {
                 if (evento.timer.source == timer)
                     redraw = true;
                 else if (evento.timer.source == timer2)
                     tick = true;
-
-
+            }
         }
         draw(redraw, atores);
-
     }
 
     al_destroy_display(display); // Finaliza a janela
@@ -150,11 +151,13 @@ int main(int argc, char **argv) {
 
 void colisaoBolas(list<Personagem *> &atores, Parmerinha *player, Bola **bol) {
     for (int i = 0; i < QUANTIDADE_TROFEUS; i++) {
-        if (bol[i] != NULL) if (player->colisao(bol[i])) {
+        if (bol[i] != NULL) {
+            if (player->colisao(bol[i])) {
                 atores.remove(bol[i]);
                 delete bol[i];
                 bol[i] = NULL;
             }
+        }
     }
 }
 
@@ -170,38 +173,46 @@ void criaNovasBolas(list<Personagem *> &atores, Bola **bol) {
 }
 
 void criaNovosTrofeis(list<Personagem *> &atores, Trofeu **tro) {
-    if (rand() % 10 == 1) //criando trof�us novos
-        for (int i = 0; i < QUANTIDADE_TROFEUS; i++)
+    if (rand() % 10 == 1){ //criando trof�us novos
+        for (int i = 0; i < QUANTIDADE_TROFEUS; i++) {
             if (tro[i] == NULL) {
                 tro[i] = new Trofeu();
                 atores.push_back(tro[i]);
             }
+        }
+    }
 }
 
 void deletaTrofeisNoFimdaTela(list<Personagem *> &atores, Trofeu **tro) {
-    for (int i = 0; i < QUANTIDADE_TROFEUS; i++) //deletando os trofeus no fim da tela
-        if (tro[i] != NULL)
+    for (int i = 0; i < QUANTIDADE_TROFEUS; i++){ //deletando os trofeus no fim da tela
+        if (tro[i] != NULL){
             if (!tro[i]->mover()) {
-                cout << "ator" << tro[i] << " destruido" << endl;
+                //cout << "ator" << tro[i] << " destruido" << endl;
                 atores.remove(tro[i]);
                 delete tro[i];
                 tro[i] = NULL;
             }
+        }
+    }
 }
 
 void colisaoTrofeis(list<Personagem *> &atores, Parmerinha *ator, Trofeu **tro) {
-    for (int i = 0; i < QUANTIDADE_TROFEUS; i++)
-        if (tro[i] != NULL)
+    for (int i = 0; i < QUANTIDADE_TROFEUS; i++){
+        if (tro[i] != NULL){
             tro[i]->mover();
+        }
+    }
 
-    for (int i = 0; i < QUANTIDADE_TROFEUS; i++) //ver colisão com os objetos(trofeus)
-        if (tro[i] != NULL)
+    for (int i = 0; i < QUANTIDADE_TROFEUS; i++){ //ver colisão com os objetos(trofeus)
+        if (tro[i] != NULL){
             if (ator->colisao(tro[i])) {
-                cout << "colisao" << endl;
+                //cout << "colisao" << endl;
                 delete tro[i];
                 atores.remove(tro[i]);
                 tro[i] = NULL;
             }
+        }
+    }
 }
 
 /*

@@ -31,16 +31,14 @@ bool inicializaTudo() {
 
     // Criando a nossa janela
     al_set_new_display_flags(ALLEGRO_RESIZABLE);
-
+    al_set_new_display_flags(ALLEGRO_OPENGL);
+    
     display = al_create_display(320, 200);
     if (!display) {
         fprintf(stderr, "falha ao criar a tela!\n");
         return -1;
     }
-    al_set_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, true);
-
-
-
+   
     // inicializando uso do teclado
     if (!al_install_keyboard()) {
         fprintf(stderr, "Falha ao inicializar o teclado.\n");

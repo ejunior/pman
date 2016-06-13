@@ -12,7 +12,7 @@
 #ifndef CONSTANTES_H
 #define CONSTANTES_H
 
-#define QUANTIDADE_TROFEUS 3
+#define QUANTIDADE_TROFEUS 50
 
 #define TELA_WIDTH al_get_display_width(display)
 #define TELA_HEIGHT al_get_display_height(display)

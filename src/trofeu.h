@@ -5,7 +5,7 @@
 #include "Personagem.h"
 #include "constantes.h"
 
-#include <iostream>
+//#include <iostream>
 #include <stdio.h>
 
 #include <cstdlib>

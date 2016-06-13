@@ -47,7 +47,7 @@ public:
         // perímetro de colisão visível
         al_draw_circle(getCentroX(), getCentroY(), spriteRadius(), cor, 1);
 
-        al_draw_scaled_bitmap(img, 0, 0, al_get_bitmap_width(img), al_get_bitmap_height(img), x, y, spriteWidth(), spriteHeight(), 0);
+        //al_draw_scaled_bitmap(img, 0, 0, al_get_bitmap_width(img), al_get_bitmap_height(img), x, y, spriteWidth(), spriteHeight(), 0);
 
         //ponto 0 da imagem;
         al_put_pixel(x, y, cor);
@@ -67,12 +67,12 @@ public:
     }
 
     virtual _TIPO_TELA spriteHeight() {
-        if (img == nullptr) std::cerr << "imagem está nula" << std::endl;
+        //if (img == nullptr) std::cerr << "imagem está nula" << std::endl;
         return (img != nullptr) ? al_get_bitmap_height(img) * fator_escala : 0;
     }
 
     virtual _TIPO_TELA spriteWidth() {
-        if (img == nullptr) std::cerr << "imagem está nula" << std::endl;
+        //if (img == nullptr) std::cerr << "imagem está nula" << std::endl;
 
         return (img != nullptr) ? al_get_bitmap_width(img) * fator_escala : 0;
     }

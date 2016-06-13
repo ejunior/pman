@@ -3,7 +3,7 @@
 
 #include "constantes.h"
 #include "Personagem.h"
-#include <iostream>
+//#include <iostream>
 
 
 #define DIR_UP 0
@@ -84,7 +84,7 @@ public:
         _TIPO_TELA dist = sqrt((distx * distx) + (disty * disty));
 
         if (dist <= (spriteRadius() + pers->spriteRadius())) {
-            cout << dist << ", " << (spriteRadius() + pers->spriteRadius()) << endl;
+            //cout << dist << ", " << (spriteRadius() + pers->spriteRadius()) << endl;
             return true; // colidiu       
         }
         return false;
