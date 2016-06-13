@@ -41,17 +41,23 @@
 using namespace std;
 
 void draw(bool &d, std::list<Personagem*> atores);
-
 void colisaoTrofeis(list<Personagem *> &atores, Parmerinha *ator, Trofeu **tro);
 void deletaTrofeisNoFimdaTela(list<Personagem *> &atores, Trofeu **tro);
 void criaNovosTrofeis(list<Personagem *> &atores, Trofeu **tro);
-
 void criaNovasBolas(list<Personagem *> &atores, Bola **bol);
-
 void colisaoBolas(list<Personagem *> &atores, Parmerinha *player, Bola **bol);
 
 int main(int argc, char **argv) {
 
+    
+    //carga das imagens 
+    ALLEGRO_BITMAP *img_parmeira[5];
+    img_parmeira[0] = IMG_PALM;
+    img_parmeira[1] = IMG_PALM_U;
+    img_parmeira[2] = IMG_PALM_D;
+    img_parmeira[3] = IMG_PALM_R;
+    img_parmeira[4] = IMG_PALM_L;
+    
     bool tick;
     // lista de elementos gráficos em cena
     std::list<Personagem *> atores;
@@ -65,7 +71,7 @@ int main(int argc, char **argv) {
     // int tecla = 0, mx = 0, my = 0; variáveis não usadas
     ALLEGRO_EVENT evento;
     bool redraw = true;
-    Parmerinha *player = new Parmerinha();
+    Parmerinha *player = new Parmerinha(fonte,img_parmeira);
     atores.push_back(player);
 
     Trofeu **tro = new Trofeu *[QUANTIDADE_TROFEUS];

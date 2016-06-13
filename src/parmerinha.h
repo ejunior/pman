@@ -21,7 +21,7 @@ private:
 
 public:
 
-    Parmerinha() : Personagem() {
+    Parmerinha(ALLEGRO_FONT *fnt, ALLEGRO_BITMAP* spr[]) : Personagem(ALLEGRO_FONT *fnt, ALLEGRO_BITMAP* spr[]) {
         velocidade = 0;
         fator_escala = 0.7;
         x = TELA_WIDTH / 2;
@@ -29,11 +29,11 @@ public:
         dir = -1;
         velocidadeDeslocamento = VELOCIDADE_ATOR;
 
-        img = IMG_PALM;
-        sprite_up = IMG_PALM_U;
-        sprite_down = IMG_PALM_D;
-        sprite_right = IMG_PALM_R;
-        sprite_left = IMG_PALM_L;
+        img = spr[0];
+        sprite_up = spr[0];
+        sprite_down = spr[0];
+        sprite_right = spr[0];
+        sprite_left = spr[0];
 
         // cor do personagem 
         cor = ALCOLOR_GREEN;

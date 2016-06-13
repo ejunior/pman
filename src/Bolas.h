@@ -11,7 +11,7 @@ private:
 public:
 
     Bola() : Personagem() {
-        img = NULL; // IMG_BOLA;
+        img = nullptr; // IMG_BOLA;
         ponto = 1;
         dura = 10;
         velocidadeDeslocamento = 0;

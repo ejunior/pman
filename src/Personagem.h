@@ -24,16 +24,16 @@ protected:
 
 public:
 
-    Personagem() {
+    Personagem(ALLEGRO_FONT *fnt, ALLEGRO_BITMAP* spr[]) {
         cor = ALCOLOR_WHITE;
-        fonte = FONTE_DEFAULT;
+        fonte = fnt;
         fator_escala = 1.0;
 
         x = 0;
         y = 0;
 
         velocidadeDeslocamento = 0.02;
-        img = NULL;
+        img = spr[0];
 
     }
 
