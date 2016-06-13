@@ -37,7 +37,7 @@
 #define IMG_INIMIGO_3 al_load_bitmap(".//res//chape.png");
 #define IMG_INIMIGO_4 al_load_bitmap(".//res//goias.png");
 
-#define FONTE_DEFAULT al_load_font(".//res//tahoma.TTF", 10, 0)
+#define FONTE_DEFAULT fonte//al_load_font(".//res//tahoma.TTF", 10, 0)
 
 // tipo do retorno das funções de desenho e da classe personagem, vi que voce ficava alterando isso de vez em quando
 #define _TIPO_TELA double

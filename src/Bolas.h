@@ -1,15 +1,17 @@
 
+#ifndef BOLAS_H
+#define BOLAS_H
+
 #include "constantes.h"
 
 class Bola : public Personagem {
 private:
-    _TIPO_TELA ponto, dura;
-    ALLEGRO_BITMAP *img;
+    _TIPO_TELA ponto, dura;    
 
 public:
 
     Bola() : Personagem() {
-        img = al_load_bitmap("bola.png");
+        img = NULL; // IMG_BOLA;
         ponto = 1;
         dura = 10;
         velocidadeDeslocamento = 0;
@@ -22,19 +24,18 @@ public:
         return false;
     }
 
-    void mostrar() {
-        al_draw_bitmap(img, x, y, 0);
-    }
-
     _TIPO_TELA getCentroX() {
-        return x + al_get_bitmap_width(img);
+        return (img)? x + al_get_bitmap_width(img):0;
     }
 
     _TIPO_TELA getCentroY() {
-        return y + al_get_bitmap_height(img);
+        return (img)?y + al_get_bitmap_height(img):0;
     }
 
     _TIPO_TELA getLargura() {
-        return al_get_bitmap_width(img);
+        return (img)? al_get_bitmap_width(img):0;
     }
 };
+
+#endif	// BOLAS_H
+

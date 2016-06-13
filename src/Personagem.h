@@ -18,7 +18,7 @@ protected:
     _TIPO_TELA x, y;
     double velocidadeDeslocamento;
     ALLEGRO_BITMAP *img;
-    ALLEGRO_FONT *fonte = NULL;
+    ALLEGRO_FONT *fonte = nullptr;
     ALLEGRO_COLOR cor;
 
 
@@ -59,22 +59,28 @@ public:
     }
 
     virtual _TIPO_TELA getCentroX() {
-        return x + (al_get_bitmap_width(img) * fator_escala / 2);
+        if (img)
+            return x + (al_get_bitmap_width(img) * fator_escala / 2);
+        else
+            return 0;
     }
 
     virtual _TIPO_TELA getCentroY() {
-        return y + (al_get_bitmap_height(img) * fator_escala / 2);
+        if (img)
+            return y + (al_get_bitmap_height(img) * fator_escala / 2);
+        else
+            return 0;
     }
 
     virtual _TIPO_TELA spriteHeight() {
         //if (img == nullptr) std::cerr << "imagem está nula" << std::endl;
-        return (img != nullptr) ? al_get_bitmap_height(img) * fator_escala : 0;
+        return (img)? al_get_bitmap_height(img) * fator_escala : 0;
     }
 
     virtual _TIPO_TELA spriteWidth() {
         //if (img == nullptr) std::cerr << "imagem está nula" << std::endl;
 
-        return (img != nullptr) ? al_get_bitmap_width(img) * fator_escala : 0;
+        return (img)? al_get_bitmap_width(img) * fator_escala : 0;
     }
 
     virtual _TIPO_TELA spriteRadius() {
@@ -88,7 +94,7 @@ public:
         double diametro = std::max(spriteWidth(), spriteHeight());
         double raio = diametro / 2;
 
-        return (img != nullptr) ? raio : 0; // spriteWidth():0;  //
+        return (img) ? raio : 0; // spriteWidth():0;  //
     }
 
 };

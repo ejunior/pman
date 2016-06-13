@@ -90,13 +90,13 @@ public:
         return false;
     }
 
-    _TIPO_TELA getX() {
-        return x;
-    }
-
-    _TIPO_TELA getY() {
-        return y;
-    }
+//    _TIPO_TELA getX() {
+//        return x;
+//    }
+//
+//    _TIPO_TELA getY() {
+//        return y;
+//    }
 
 };
 

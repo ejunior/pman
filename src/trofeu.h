@@ -17,7 +17,7 @@ private:
 public:
 
     Trofeu() {
-        img = IMG_TROFEU;
+        img = nullptr; //IMG_TROFEU;
         fator_escala = 0.3;
 
         velocidadeDeslocamento = VELOCIDADE_TROFEU;
