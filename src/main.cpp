@@ -167,13 +167,13 @@ int main(int argc, char **argv) {
     Parmerinha *player = new Parmerinha(fonte, img_parmeira);
     atores.push_back(player);
 
-    Trofeu **tro = new Trofeu*[QUANTIDADE_TROFEUS];
+    Trofeu **trofeis = new Trofeu*[QUANTIDADE_TROFEUS];
     for (int i = 0; i < QUANTIDADE_TROFEUS; i++)
-        tro[i] = NULL;
+        trofeis[i] = NULL;
 
-    Bola **bol = new Bola* [QUANTIDADE_TROFEUS];
+    Bola **bolas = new Bola* [QUANTIDADE_TROFEUS];
     for (int i = 0; i < QUANTIDADE_TROFEUS; i++)
-        bol[i] = NULL;
+        bolas[i] = NULL;
 
     /*Vilao **vi = new Vilao*[1];
     vi[1] = new Vilao();*/
@@ -186,11 +186,11 @@ int main(int argc, char **argv) {
 
         while (tick) {
             tick = false;
-            criaNovosTrofeis(atores, tro, fonte,  img_trofeu);
-            deletaTrofeisNoFimdaTela(atores, tro);
-            colisaoTrofeis(atores, player, tro);            
-            criaNovasBolas(atores, bol, fonte, img_bola);
-            colisaoBolas(atores, player, bol);
+            criaNovosTrofeis(atores, trofeis, fonte,  img_trofeu);
+            deletaTrofeisNoFimdaTela(atores, trofeis);
+            colisaoTrofeis(atores, player, trofeis);            
+            criaNovasBolas(atores, bolas, fonte, img_bola);
+            colisaoBolas(atores, player, bolas);
             player->mover();
         }
 
