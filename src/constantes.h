@@ -12,7 +12,7 @@
 #ifndef CONSTANTES_H
 #define CONSTANTES_H
 
-#define QUANTIDADE_TROFEUS 50
+#define QUANTIDADE_TROFEUS 500
 
 #define TELA_WIDTH al_get_display_width(display)
 #define TELA_HEIGHT al_get_display_height(display)
@@ -22,22 +22,22 @@
 //   h = al_get_display_height(display);
 
 // NÃO USAR DENTO DA FUNÇÃO DRAW, POIS A CARGA DE ARQUIVOS É UM PROCESSO MUITO LENTO!!!!!
-#define BTN_LOGOUT  al_load_bitmap(".//res//logout.png")
-#define IMG_TROFEU  al_load_bitmap(".//res//trofeu.png")
-#define IMG_BOLA    al_load_bitmap(".//res//bola.png")
+//#define BTN_LOGOUT  al_load_bitmap(".//res//logout.png")
+//#define IMG_TROFEU  al_load_bitmap(".//res//trofeu.png")
+//#define IMG_BOLA    al_load_bitmap(".//res//bola.png")
+//
+//#define IMG_PALM    al_load_bitmap(".//res//pal.png")
+//#define IMG_PALM_U  al_load_bitmap(".//res//palC.png")
+//#define IMG_PALM_D  al_load_bitmap(".//res//palB.png")
+//#define IMG_PALM_R  al_load_bitmap(".//res//palD.png")
+//#define IMG_PALM_L  al_load_bitmap(".//res//palE.png")
+//
+//#define IMG_INIMIGO_1 al_load_bitmap(".//res//coxa.png");
+//#define IMG_INIMIGO_2 al_load_bitmap(".//res//mira.png");
+//#define IMG_INIMIGO_3 al_load_bitmap(".//res//chape.png");
+//#define IMG_INIMIGO_4 al_load_bitmap(".//res//goias.png");
 
-#define IMG_PALM    al_load_bitmap(".//res//pal.png")
-#define IMG_PALM_U  al_load_bitmap(".//res//palC.png")
-#define IMG_PALM_D  al_load_bitmap(".//res//palB.png")
-#define IMG_PALM_R  al_load_bitmap(".//res//palD.png")
-#define IMG_PALM_L  al_load_bitmap(".//res//palE.png")
-
-#define IMG_INIMIGO_1 al_load_bitmap(".//res//coxa.png");
-#define IMG_INIMIGO_2 al_load_bitmap(".//res//mira.png");
-#define IMG_INIMIGO_3 al_load_bitmap(".//res//chape.png");
-#define IMG_INIMIGO_4 al_load_bitmap(".//res//goias.png");
-
-#define FONTE_DEFAULT fonte//al_load_font(".//res//tahoma.TTF", 10, 0)
+//#define FONTE_DEFAULT fonte//al_load_font(".//res//tahoma.TTF", 10, 0)
 
 // tipo do retorno das funções de desenho e da classe personagem, vi que voce ficava alterando isso de vez em quando
 #define _TIPO_TELA double

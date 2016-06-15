@@ -4,33 +4,22 @@
 
 #include "constantes.h"
 #include "Personagem.h"
+#include "myAllegro.h"
 
 class Bola : public Personagem {
 private:
-    int dura = 10;
 
 public:
 
-    Bola() : Personagem() {
-        img = IMG_BOLA;
+    Bola(ALLEGRO_FONT* fnt, ALLEGRO_BITMAP *bmp[]):Personagem(fnt, bmp){
         cor = ALCOLOR_RED;
-        dura = 10;
-        velocidadeDeslocamento = VELOCIDADE_BOLA;
-
+        fator_escala = 1;        
         // evita que a figura apareça na tela pela metade
-
         x = rand() % ((int) TELA_WIDTH - (int) round(spriteWidth()));
-        y = rand() % ((int) TELA_HEIGHT - (int) round(spriteHeight()));
+        y = rand() % ((int) TELA_HEIGHT - (int) round(spriteHeight()));        
     }
 
-    bool mover() override {
-        return true;
-    }
-
-    void mostrar() override {
-        Personagem::mostrar();
-    }
-
+    virtual ~Bola(){}
 };
 
 #endif // BOLA_H

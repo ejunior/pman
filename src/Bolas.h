@@ -3,6 +3,7 @@
 #define BOLAS_H
 
 #include "constantes.h"
+#include "Personagem.h"
 
 class Bola : public Personagem {
 private:
@@ -12,29 +13,11 @@ public:
 
     Bola() : Personagem() {
         img = nullptr; // IMG_BOLA;
-        ponto = 1;
-        dura = 10;
-        velocidadeDeslocamento = 0;
-        x = rand() % 795;
-        y = rand() % 595;
+        x =rand() % TELA_WIDTH - spriteWidth();
+        y =rand() % TELA_HEIGHT - spriteHeight();
     }
-
-    bool mover() {
-        mostrar();
-        return false;
-    }
-
-    _TIPO_TELA getCentroX() {
-        return (img)? x + al_get_bitmap_width(img):0;
-    }
-
-    _TIPO_TELA getCentroY() {
-        return (img)?y + al_get_bitmap_height(img):0;
-    }
-
-    _TIPO_TELA getLargura() {
-        return (img)? al_get_bitmap_width(img):0;
-    }
+    ~Bola(){}
+   
 };
 
 #endif	// BOLAS_H

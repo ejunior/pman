@@ -18,16 +18,17 @@
 
 //randomizador c++
 #include <ctime> 
-//#include <cstdlib>
+#include <iostream>
 
 #include <allegro5/allegro.h>
 
-// não utilizadas
-//#include <allegro5/allegro_primitives.h>
-//#include <allegro5/allegro_image.h>
-//#include <allegro5/mouse.h>
-//#include <allegro5/allegro_font.h>
-//#include <allegro5/allegro_ttf.h>
+
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_image.h>
+
+#include <allegro5/mouse.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 
 #include "myAllegro.h"
 #include "Personagem.h"
@@ -35,68 +36,160 @@
 #include "bola.h"
 #include "parmerinha.h"
 //#include "vilao.h"   //nao usada
-
-//#include "myconio.h" //nao usada
-
 using namespace std;
 
-void draw(bool &d, std::list<Personagem*> atores);
-void colisaoTrofeis(list<Personagem *> &atores, Parmerinha *ator, Trofeu **tro);
-void deletaTrofeisNoFimdaTela(list<Personagem *> &atores, Trofeu **tro);
-void criaNovosTrofeis(list<Personagem *> &atores, Trofeu **tro);
-void criaNovasBolas(list<Personagem *> &atores, Bola **bol);
-void colisaoBolas(list<Personagem *> &atores, Parmerinha *player, Bola **bol);
+
+void colisaoBolas(list<Personagem *> &atores, Parmerinha *player, Bola **bol) {
+    for (int i = 0; i < QUANTIDADE_TROFEUS; i++) {
+        if (bol[i] != NULL) {
+            if (player->colisao(bol[i])) {
+                atores.remove(bol[i]);
+                delete bol[i];
+                bol[i] = NULL;
+            }
+        }
+    }
+}
+
+void criaNovasBolas(list<Personagem *> &atores, Bola **bol, ALLEGRO_FONT *f, ALLEGRO_BITMAP **b) {
+    if (rand() % 100 == 1) {
+        for (int i = 0; i < QUANTIDADE_TROFEUS; i++) {
+            if (bol[i] == NULL) {
+                bol[i] = new Bola(f, b);
+                atores.push_back(bol[i]);
+            }
+        }
+    }
+}
+
+void criaNovosTrofeis(list<Personagem *> &atores, Trofeu **tro, ALLEGRO_FONT *f,  ALLEGRO_BITMAP **b) {
+    if (rand() % 10 == 1){ //criando trof�us novos
+        for (int i = 0; i < QUANTIDADE_TROFEUS; i++) {
+            if (tro[i] == NULL) {
+                tro[i] = new Trofeu(f, b);
+                atores.push_back(tro[i]);
+            }
+        }
+    }
+}
+
+void deletaTrofeisNoFimdaTela(list<Personagem *> &atores, Trofeu **tro) {
+    for (int i = 0; i < QUANTIDADE_TROFEUS; i++){ //deletando os trofeus no fim da tela
+        if (tro[i] != NULL){
+            if (!tro[i]->mover()) {                
+                atores.remove(tro[i]);
+                delete tro[i];
+                tro[i] = NULL;
+            }
+        }
+    }
+}
+
+void colisaoTrofeis(list<Personagem *> &atores, Parmerinha *ator, Trofeu **tro) {
+    for (int i = 0; i < QUANTIDADE_TROFEUS; i++){
+        if (tro[i] != NULL){
+            tro[i]->mover();
+        }
+    }
+
+    for (int i = 0; i < QUANTIDADE_TROFEUS; i++){ //ver colisão com os objetos(trofeus)
+        if (tro[i] != NULL){
+            if (ator->colisao(tro[i])) {                
+                delete tro[i];
+                atores.remove(tro[i]);
+                tro[i] = NULL;
+            }
+        }
+    }
+}
+
+/*
+ * implemeta o método para facilitar a fase de dezenho da cena
+ * FAZER: fazer a faze de desenho acontecer em funcão do tempo e não todo loop!!!
+ * */
+void draw(bool &redraw, std::list<Personagem*> atores) {
+    if (redraw) {
+        redraw = false;
+        double t = al_get_time();
+        al_clear_to_color(al_map_rgb(0, 0, 0));
+        for (auto p : atores) {
+            p->mostrar();
+        }
+
+        al_draw_bitmap(img_botao_desligar, 0, 0, 0); // mostra o botao para fechamento
+
+        if (fonte) {
+            al_draw_filled_rounded_rectangle(4, 4, 100, 30, 8, 8, al_map_rgba(0, 0, 0, 20));
+            al_draw_textf(fonte, al_map_rgb(255, 255, 255), 54, 8, ALLEGRO_ALIGN_CENTRE, "FPS: %d", fps);
+        }
+
+        fps_accum++;
+        if (t - fps_time >= 1) {
+            fps = fps_accum;
+            fps_accum = 0;
+            fps_time = t;
+
+        }
+        al_flip_display(); // Atualiza a tela
+        redraw = false;
+    }
+
+}
+
 
 int main(int argc, char **argv) {
-
+    
+    
+    std::srand(std::time(0));
+    if (!inicializaTudo()) return -1;
     
     //carga das imagens 
     ALLEGRO_BITMAP *img_parmeira[5];
-    img_parmeira[0] = IMG_PALM;
-    img_parmeira[1] = IMG_PALM_U;
-    img_parmeira[2] = IMG_PALM_D;
-    img_parmeira[3] = IMG_PALM_R;
-    img_parmeira[4] = IMG_PALM_L;
+    ALLEGRO_BITMAP *img_trofeu[1];
+    ALLEGRO_BITMAP *img_bola[1];
     
-    bool tick;
+    
+    img_parmeira[0] = al_load_bitmap(".//res//pal.png");
+    img_parmeira[1] = al_load_bitmap(".//res//palC.png");
+    img_parmeira[2] = al_load_bitmap(".//res//palB.png");
+    img_parmeira[3] = al_load_bitmap(".//res//palD.png");
+    img_parmeira[4] = al_load_bitmap(".//res//palE.png");
+  
+    img_trofeu[0] = al_load_bitmap(".//res//trofeu.png"); 
+    img_bola[0] = al_load_bitmap(".//res//bola.png");
+    
+    img_botao_desligar = al_load_bitmap(".//res//logout.png");
+    
     // lista de elementos gráficos em cena
     std::list<Personagem *> atores;
-    //srand(time(NULL));
-    std::srand(std::time(0));
-    if (!inicializaTudo()) return -1;
-    // carrega uma imagem
-    imagem_botao = BTN_LOGOUT;
-    // nao precisa use o exit(0);
-    //bool sair = false;
-    // int tecla = 0, mx = 0, my = 0; variáveis não usadas
-    ALLEGRO_EVENT evento;
-    bool redraw = true;
-    Parmerinha *player = new Parmerinha(fonte,img_parmeira);
+    
+
+    Parmerinha *player = new Parmerinha(fonte, img_parmeira);
     atores.push_back(player);
 
-    Trofeu **tro = new Trofeu *[QUANTIDADE_TROFEUS];
+    Trofeu **tro = new Trofeu*[QUANTIDADE_TROFEUS];
+    for (int i = 0; i < QUANTIDADE_TROFEUS; i++)
+        tro[i] = NULL;
 
-    for (int i = 0; i < QUANTIDADE_TROFEUS; i++) //isso é necessário?
-    {
-        tro[i] = new Trofeu();
-        atores.push_back(tro[i]);
-    }
-
-    Bola **bol = new Bola *[QUANTIDADE_TROFEUS];
+    Bola **bol = new Bola* [QUANTIDADE_TROFEUS];
     for (int i = 0; i < QUANTIDADE_TROFEUS; i++)
         bol[i] = NULL;
 
     /*Vilao **vi = new Vilao*[1];
     vi[1] = new Vilao();*/
-
+    
+    ALLEGRO_EVENT evento;
+    bool redraw = true;
+    bool tick = true; // atualiza lógica
+    
     while (true) {
 
         while (tick) {
             tick = false;
-            colisaoTrofeis(atores, player, tro);
+            criaNovosTrofeis(atores, tro, fonte,  img_trofeu);
             deletaTrofeisNoFimdaTela(atores, tro);
-            criaNovosTrofeis(atores, tro);
-            criaNovasBolas(atores, bol);
+            colisaoTrofeis(atores, player, tro);            
+            criaNovasBolas(atores, bol, fonte, img_bola);
             colisaoBolas(atores, player, bol);
             player->mover();
         }
@@ -105,16 +198,19 @@ int main(int argc, char **argv) {
             al_clear_to_color(al_map_rgb(0, 0, 0)); // Colorindo a janela de preto
             al_wait_for_event(fila_eventos, &evento);
 
-            if (evento.type == ALLEGRO_EVENT_KEY_DOWN) // uma tecla foi pressionada
-            {
+            if (evento.type == ALLEGRO_EVENT_KEY_DOWN){ // uma tecla foi pressionada            
                 switch (evento.keyboard.keycode) {
-                    case ALLEGRO_KEY_UP: player->trocaDirecao(0);
+                    case ALLEGRO_KEY_UP: 
+                        player->trocaDirecao(0);
                         break;
-                    case ALLEGRO_KEY_DOWN: player->trocaDirecao(2);
+                    case ALLEGRO_KEY_DOWN:
+                        player->trocaDirecao(2);
                         break;
-                    case ALLEGRO_KEY_LEFT: player->trocaDirecao(3);
+                    case ALLEGRO_KEY_LEFT: 
+                        player->trocaDirecao(3);
                         break;
-                    case ALLEGRO_KEY_RIGHT: player->trocaDirecao(1);
+                    case ALLEGRO_KEY_RIGHT: 
+                        player->trocaDirecao(1);
                         break;
                     case ALLEGRO_KEY_ENTER: 
                         if(evento.keyboard.modifiers|ALLEGRO_KEYMOD_ALT ){
@@ -131,8 +227,7 @@ int main(int argc, char **argv) {
                         exit(0);
                         
                 }
-            } else if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) // click no mouse
-            {
+            } else if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){ // click no mouse
                 if (evento.mouse.x > 0 && evento.mouse.x < 20 &&
                         evento.mouse.y > 0 && evento.mouse.y < 20) // cordenadas do botao
                     exit(0);
@@ -155,101 +250,3 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void colisaoBolas(list<Personagem *> &atores, Parmerinha *player, Bola **bol) {
-    for (int i = 0; i < QUANTIDADE_TROFEUS; i++) {
-        if (bol[i] != NULL) {
-            if (player->colisao(bol[i])) {
-                atores.remove(bol[i]);
-                delete bol[i];
-                bol[i] = NULL;
-            }
-        }
-    }
-}
-
-void criaNovasBolas(list<Personagem *> &atores, Bola **bol) {
-    if (rand() % 100 == 1) {
-        for (int i = 0; i < QUANTIDADE_TROFEUS; i++) {
-            if (bol[i] == NULL) {
-                bol[i] = new Bola();
-                atores.push_back(bol[i]);
-            }
-        }
-    }
-}
-
-void criaNovosTrofeis(list<Personagem *> &atores, Trofeu **tro) {
-    if (rand() % 10 == 1){ //criando trof�us novos
-        for (int i = 0; i < QUANTIDADE_TROFEUS; i++) {
-            if (tro[i] == NULL) {
-                tro[i] = new Trofeu();
-                atores.push_back(tro[i]);
-            }
-        }
-    }
-}
-
-void deletaTrofeisNoFimdaTela(list<Personagem *> &atores, Trofeu **tro) {
-    for (int i = 0; i < QUANTIDADE_TROFEUS; i++){ //deletando os trofeus no fim da tela
-        if (tro[i] != NULL){
-            if (!tro[i]->mover()) {
-                //cout << "ator" << tro[i] << " destruido" << endl;
-                atores.remove(tro[i]);
-                delete tro[i];
-                tro[i] = NULL;
-            }
-        }
-    }
-}
-
-void colisaoTrofeis(list<Personagem *> &atores, Parmerinha *ator, Trofeu **tro) {
-    for (int i = 0; i < QUANTIDADE_TROFEUS; i++){
-        if (tro[i] != NULL){
-            tro[i]->mover();
-        }
-    }
-
-    for (int i = 0; i < QUANTIDADE_TROFEUS; i++){ //ver colisão com os objetos(trofeus)
-        if (tro[i] != NULL){
-            if (ator->colisao(tro[i])) {
-                //cout << "colisao" << endl;
-                delete tro[i];
-                atores.remove(tro[i]);
-                tro[i] = NULL;
-            }
-        }
-    }
-}
-
-/*
- * implemeta o método para facilitar a fase de dezenho da cena
- * FAZER: fazer a faze de desenho acontecer em funcão do tempo e não todo loop!!!
- * */
-void draw(bool &redraw, std::list<Personagem*> atores) {
-    if (redraw) {
-        redraw = false;
-        double t = al_get_time();
-        al_clear_to_color(al_map_rgb(0, 0, 0));
-        for (auto p : atores) {
-            p->mostrar();
-        }
-
-        al_draw_bitmap(imagem_botao, 0, 0, 0); // mostra o botao para fechamento
-
-        if (fonte) {
-            al_draw_filled_rounded_rectangle(4, 4, 100, 30, 8, 8, al_map_rgba(0, 0, 0, 20));
-            al_draw_textf(fonte, al_map_rgb(255, 255, 255), 54, 8, ALLEGRO_ALIGN_CENTRE, "FPS: %d", fps);
-        }
-
-        fps_accum++;
-        if (t - fps_time >= 1) {
-            fps = fps_accum;
-            fps_accum = 0;
-            fps_time = t;
-
-        }
-        al_flip_display(); // Atualiza a tela
-        redraw = false;
-    }
-
-}

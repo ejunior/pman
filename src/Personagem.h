@@ -12,29 +12,32 @@
 #include <algorithm> // max()
 #include <allegro5/allegro_font.h>
 
+
+using namespace std;
+
 class Personagem {
 protected:
     float fator_escala;
     _TIPO_TELA x, y;
     double velocidadeDeslocamento;
-    ALLEGRO_BITMAP *img;
+    ALLEGRO_BITMAP *img = nullptr;
     ALLEGRO_FONT *fonte = nullptr;
     ALLEGRO_COLOR cor;
 
 
 public:
-
-    Personagem(ALLEGRO_FONT *fnt, ALLEGRO_BITMAP* spr[]) {
-        cor = ALCOLOR_WHITE;
-        fonte = fnt;
-        fator_escala = 1.0;
-
+    Personagem(){        
+        fator_escala = 1;
         x = 0;
         y = 0;
-
         velocidadeDeslocamento = 0.02;
-        img = spr[0];
+    }
 
+    Personagem(ALLEGRO_FONT* fnt, ALLEGRO_BITMAP* spr[]) {        
+        Personagem();
+        cor = ALCOLOR_WHITE;
+        fonte = fnt;        
+        img = spr[0];
     }
 
     virtual bool mover() {
@@ -42,13 +45,12 @@ public:
     };
 
     virtual void mostrar() {
-        //al_draw_bitmap(img, x, y, 0);
-
+        if(img)
+        al_draw_scaled_bitmap(img, 0, 0, al_get_bitmap_width(img), al_get_bitmap_height(img), x, y, spriteWidth(), spriteHeight(), 0);
+        
         // perímetro de colisão visível
         al_draw_circle(getCentroX(), getCentroY(), spriteRadius(), cor, 1);
-
-        //al_draw_scaled_bitmap(img, 0, 0, al_get_bitmap_width(img), al_get_bitmap_height(img), x, y, spriteWidth(), spriteHeight(), 0);
-
+        
         //ponto 0 da imagem;
         al_put_pixel(x, y, cor);
 
@@ -73,13 +75,10 @@ public:
     }
 
     virtual _TIPO_TELA spriteHeight() {
-        //if (img == nullptr) std::cerr << "imagem está nula" << std::endl;
         return (img)? al_get_bitmap_height(img) * fator_escala : 0;
     }
 
     virtual _TIPO_TELA spriteWidth() {
-        //if (img == nullptr) std::cerr << "imagem está nula" << std::endl;
-
         return (img)? al_get_bitmap_width(img) * fator_escala : 0;
     }
 

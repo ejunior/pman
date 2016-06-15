@@ -1,9 +1,11 @@
 #ifndef PARMERINHA
 #define PARMERINHA
 
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_image.h>
 #include "constantes.h"
 #include "Personagem.h"
-//#include <iostream>
+
 
 
 #define DIR_UP 0
@@ -21,27 +23,22 @@ private:
 
 public:
 
-    Parmerinha(ALLEGRO_FONT *fnt, ALLEGRO_BITMAP* spr[]) : Personagem(ALLEGRO_FONT *fnt, ALLEGRO_BITMAP* spr[]) {
+    Parmerinha(ALLEGRO_FONT* fnt, ALLEGRO_BITMAP* spr[]) : Personagem(fnt, spr) {
         velocidade = 0;
         fator_escala = 0.7;
         x = TELA_WIDTH / 2;
         y = TELA_HEIGHT / 2;
         dir = -1;
         velocidadeDeslocamento = VELOCIDADE_ATOR;
-
-        img = spr[0];
-        sprite_up = spr[0];
-        sprite_down = spr[0];
-        sprite_right = spr[0];
-        sprite_left = spr[0];
-
+        
+        img          = spr[0];
+        sprite_up    = spr[1];
+        sprite_down  = spr[2];
+        sprite_right = spr[3];
+        sprite_left  = spr[4];
+        
         // cor do personagem 
         cor = ALCOLOR_GREEN;
-    }
-
-    void mostrar() override {
-        // colocar as particularidades aqui!!!!
-        Personagem::mostrar();
     }
 
     void trocaDirecao(int d) {

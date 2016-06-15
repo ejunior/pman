@@ -12,7 +12,7 @@
 // ponteiros globais
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_BITMAP *imagem = NULL;
-ALLEGRO_BITMAP *imagem_botao = NULL;
+ALLEGRO_BITMAP *img_botao_desligar = NULL;
 ALLEGRO_EVENT_QUEUE *fila_eventos = NULL;
 ALLEGRO_FONT *fonte = NULL;
 ALLEGRO_TIMER *timer;

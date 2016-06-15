@@ -12,24 +12,17 @@
 
 class Trofeu : public Personagem {
 private:
-    ALLEGRO_FONT *fonte;
 
 public:
 
-    Trofeu() {
-        img = nullptr; //IMG_TROFEU;
+    Trofeu(ALLEGRO_FONT* fnt, ALLEGRO_BITMAP **bmp):Personagem(fnt, bmp){
         fator_escala = 0.3;
-
         velocidadeDeslocamento = VELOCIDADE_TROFEU;
-
-
         // y deve variar entre (0) e (resolução Horizontal  - altura da figura)
         // para que a figura sempre apareça na tela inteira;
-
         y = std::rand() % (TELA_HEIGHT - (int) round(spriteHeight()));
         x = 0;
-
-        fonte = FONTE_DEFAULT;
+       
     }
 
     virtual ~Trofeu() {
@@ -42,13 +35,6 @@ public:
         }
         return true;
     }
-
-    virtual void mostrar() override {
-        // caso se tenha uma customização pode ser colocada aqui
-        // antes ou depois da execução do método da classe pai
-        Personagem::mostrar();
-    }
-
 };
 
 #endif // TROFEU_H
