@@ -18,7 +18,7 @@ using namespace std;
 class Personagem {
 protected:
     float fator_escala;
-    int x, y;
+    _TIPO_TELA x, y;
     double velocidadeDeslocamento;
     ALLEGRO_BITMAP *img = nullptr;
     ALLEGRO_FONT *fonte = nullptr;
