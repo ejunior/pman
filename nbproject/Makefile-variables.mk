@@ -7,21 +7,21 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=GNU-MacOSX
-CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-MacOSX
+CND_PLATFORM_Debug=MinGW-Windows
+CND_ARTIFACT_DIR_Debug=.
 CND_ARTIFACT_NAME_Debug=pacman
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-MacOSX/pacman
-CND_PACKAGE_DIR_Debug=dist/Debug/GNU-MacOSX/package
+CND_ARTIFACT_PATH_Debug=./pacman
+CND_PACKAGE_DIR_Debug=dist/Debug/MinGW-Windows/package
 CND_PACKAGE_NAME_Debug=pacman.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-MacOSX/package/pacman.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/MinGW-Windows/package/pacman.tar
 # Release configuration
-CND_PLATFORM_Release=GNU-MacOSX
-CND_ARTIFACT_DIR_Release=dist/Release/GNU-MacOSX
+CND_PLATFORM_Release=MinGW-Windows
+CND_ARTIFACT_DIR_Release=dist/Release/MinGW-Windows
 CND_ARTIFACT_NAME_Release=pacman
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-MacOSX/pacman
-CND_PACKAGE_DIR_Release=dist/Release/GNU-MacOSX/package
+CND_ARTIFACT_PATH_Release=dist/Release/MinGW-Windows/pacman
+CND_PACKAGE_DIR_Release=dist/Release/MinGW-Windows/package
 CND_PACKAGE_NAME_Release=pacman.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-MacOSX/package/pacman.tar
+CND_PACKAGE_PATH_Release=dist/Release/MinGW-Windows/package/pacman.tar
 #
 # include compiler specific variables
 #

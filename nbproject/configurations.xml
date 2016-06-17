@@ -1,28 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
-    </logicalFolder>
-    <logicalFolder name="ResourceFiles"
-                   displayName="Resource Files"
-                   projectFiles="true">
+    <logicalFolder name="allegro5010" displayName="allegro5010" projectFiles="true">
+      <logicalFolder name="include" displayName="include" projectFiles="true">
+        <logicalFolder name="allegro5" displayName="allegro5" projectFiles="true">
+          <logicalFolder name="inline" displayName="inline" projectFiles="true">
+            <itemPath>allegro5010/include/allegro5/inline/fmaths.inl</itemPath>
+          </logicalFolder>
+          <logicalFolder name="internal" displayName="internal" projectFiles="true">
+            <itemPath>allegro5010/include/allegro5/internal/alconfig.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="platform" displayName="platform" projectFiles="true">
+            <itemPath>allegro5010/include/allegro5/platform/almngw32.h</itemPath>
+            <itemPath>allegro5010/include/allegro5/platform/alplatf.h</itemPath>
+            <itemPath>allegro5010/include/allegro5/platform/alwin.h</itemPath>
+            <itemPath>allegro5010/include/allegro5/platform/astdbool.h</itemPath>
+            <itemPath>allegro5010/include/allegro5/platform/astdint.h</itemPath>
+          </logicalFolder>
+          <itemPath>allegro5010/include/allegro5/alcompat.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/allegro.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/altime.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/base.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/bitmap.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/bitmap_draw.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/bitmap_io.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/bitmap_lock.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/blender.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/color.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/config.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/debug.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/display.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/drawing.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/error.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/events.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/file.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/fixed.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/fmaths.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/fshook.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/fullscreen_mode.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/joystick.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/keyboard.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/keycodes.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/memory.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/monitor.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/mouse.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/mouse_cursor.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/path.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/system.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/threads.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/timer.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/tls.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/transformations.h</itemPath>
+          <itemPath>allegro5010/include/allegro5/utf8.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-    </logicalFolder>
-    <logicalFolder name="src" displayName="src" projectFiles="true">
-      <itemPath>src/Bolas.h</itemPath>
-      <itemPath>src/Personagem.h</itemPath>
-      <itemPath>src/constantes.h</itemPath>
-      <itemPath>src/main.cpp</itemPath>
-      <itemPath>src/myAllegro.h</itemPath>
-      <itemPath>src/myconio.h</itemPath>
-      <itemPath>src/parmerinha.h</itemPath>
-      <itemPath>src/trofeu.h</itemPath>
-      <itemPath>src/vilao.h</itemPath>
+      <logicalFolder name="src" displayName="src" projectFiles="true">
+        <itemPath>src/Bolas.h</itemPath>
+        <itemPath>src/GameMgr.cpp</itemPath>
+        <itemPath>src/GameMgr.hpp</itemPath>
+        <itemPath>src/Personagem.h</itemPath>
+        <itemPath>src/constantes.h</itemPath>
+        <itemPath>src/main.cpp</itemPath>
+        <itemPath>src/myAllegro.h</itemPath>
+        <itemPath>src/myconio.h</itemPath>
+        <itemPath>src/parmerinha.h</itemPath>
+        <itemPath>src/trofeu.h</itemPath>
+        <itemPath>src/vilao.h</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -35,6 +83,18 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+    <itemPath>__Makefile</itemPath>
   </logicalFolder>
   <sourceRootList>
     <Elem>src</Elem>
@@ -44,24 +104,34 @@
     <conf name="Debug" type="1">
       <toolsSet>
         <compilerSet>default</compilerSet>
-        <dependencyChecking>true</dependencyChecking>
+        <dependencyChecking>false</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
-          <standard>8</standard>
+          <standard>11</standard>
           <incDir>
-            <pElem>/usr/local/include/</pElem>
+            <pElem>allegro5010/include</pElem>
           </incDir>
-          <commandLine>-lallegro -lallegro_main -lallegro_primitives -lallegro_font -lallegro_image -lallegro_ttf</commandLine>
+          <warningLevel>2</warningLevel>
         </ccTool>
         <linkerTool>
+          <output>./pacman</output>
           <linkerAddLib>
-            <pElem>/usr/lib</pElem>
+            <pElem>allegro5010/lib</pElem>
+            <pElem>allegro5010/bin</pElem>
           </linkerAddLib>
+          <commandlineTool>g++</commandlineTool>
+          <linkerLibItems>
+            <linkerLibLibItem>allegro-5.0.10-monolith-md-debug</linkerLibLibItem>
+          </linkerLibItems>
         </linkerTool>
       </compileType>
       <item path="src/Bolas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/GameMgr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/GameMgr.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Personagem.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -92,7 +162,6 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
-          <standard>8</standard>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -101,7 +170,13 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="__Makefile" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/Bolas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/GameMgr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/GameMgr.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Personagem.h" ex="false" tool="3" flavor2="0">
       </item>

@@ -1,0 +1,67 @@
+## -*- Makefile -*-
+##
+## User: ur5f
+## Time: Jun 8, 2016 4:22:13 PM
+## Makefile created by Oracle Developer Studio.
+##
+## This file is generated automatically.
+##
+
+
+#### Compiler and tool definitions shared by all build targets #####
+CXX = g++
+CP = copy
+BASICOPTS = -g
+CCFLAGS = $(BASICOPTS)
+CXXFLAGS = $(BASICOPTS)
+#CCADMIN = 
+
+ALLEGRO_DIR = allegro5010
+ALLEGRO_BIN = $(ALLEGRO_DIR)\bin
+
+# Define the target directories.
+TARGETDIR_pacman=.
+
+
+all: pacman copy_dll
+
+
+
+## Target: pacman
+OBJS_pacman =  \
+	$(TARGETDIR_pacman)/src\main.o
+USERLIBS_pacman = $(ALLEGRO_DIR)\lib\liballegro-5.0.10-monolith-md.a $(SYSLIBS_pacman) 
+DEPLIBS_pacman = $(ALLEGRO_DIR)\lib\liballegro-5.0.10-monolith-md.a   
+LDLIBS_pacman = $(USERLIBS_pacman)
+INCLUDE = allegro5010\include
+
+#;@echo oi #cp $(ALLEGRO_DIR)\bin\liballegro-5.0.10-monolith-md.dll
+
+
+# Link or archive
+$(TARGETDIR_pacman)/pacman: $(TARGETDIR_pacman) $(OBJS_pacman) $(DEPLIBS_pacman)
+	$(LINK.cc) $(CCFLAGS_pacman) $(CPPFLAGS_pacman) -o $@ $(OBJS_pacman) $(LDLIBS_pacman)
+
+
+# Compile source files into .o files
+$(TARGETDIR_pacman)/src\main.o: $(TARGETDIR_pacman) src\main.cpp
+	$(COMPILE.cc) $(CCFLAGS_pacman) $(CPPFLAGS_pacman) -o $@ src\main.cpp -I$(INCLUDE)
+
+
+#### Clean target deletes all generated files ####
+clean:
+	rm -f \
+		$(TARGETDIR_pacman)/pacman.exe \
+		$(TARGETDIR_pacman)/src/main.o	\
+		$(TARGETDIR_pacman)/allegro-5.0.10-monolith-md.dll
+
+copy_dll:
+	@echo copiando dll
+	cp -f $(ALLEGRO_BIN)/allegro-5.0.10-monolith-md.dll $(TARGETDIR_pacman)
+
+.PHONY: copy_dll
+
+# Enable dependency checking
+.KEEP_STATE:
+.KEEP_STATE_FILE:.make.state.GNU-amd64-Windows
+

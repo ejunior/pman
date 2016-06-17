@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-MacOSX
-CND_DLIB_EXT=dylib
+CND_PLATFORM=MinGW-Windows
+CND_DLIB_EXT=dll
 CND_CONF=Debug
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/GameMgr.o \
 	${OBJECTDIR}/src/main.o
 
 
@@ -42,8 +43,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-lallegro -lallegro_main -lallegro_primitives -lallegro_font -lallegro_image -lallegro_ttf
-CXXFLAGS=-lallegro -lallegro_main -lallegro_primitives -lallegro_font -lallegro_image -lallegro_ttf
+CCFLAGS=
+CXXFLAGS=
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -52,20 +53,23 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib
+LDLIBSOPTIONS=-Lallegro5010/lib -Lallegro5010/bin -lallegro-5.0.10-monolith-md-debug
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/pacman
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ./pacman.exe
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/pacman: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/pacman ${OBJECTFILES} ${LDLIBSOPTIONS}
+./pacman.exe: ${OBJECTFILES}
+	${MKDIR} -p .
+	g++ -o ./pacman ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/src/GameMgr.o: src/GameMgr.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	$(COMPILE.cc) -g -Wall -Iallegro5010/include -std=c++14 -o ${OBJECTDIR}/src/GameMgr.o src/GameMgr.cpp
 
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/local/include/ -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
+	$(COMPILE.cc) -g -Wall -Iallegro5010/include -std=c++14 -o ${OBJECTDIR}/src/main.o src/main.cpp
 
 # Subprojects
 .build-subprojects:
@@ -73,12 +77,7 @@ ${OBJECTDIR}/src/main.o: src/main.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/pacman
+	${RM} ./pacman.exe
 
 # Subprojects
 .clean-subprojects:
-
-# Enable dependency checking
-.dep.inc: .depcheck-impl
-
-include .dep.inc
