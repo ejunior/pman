@@ -18,7 +18,7 @@ using namespace std;
 class Personagem {
 protected:
     float fator_escala;
-    _TIPO_TELA x, y;
+    int x, y;
     double velocidadeDeslocamento;
     ALLEGRO_BITMAP *img = nullptr;
     ALLEGRO_FONT *fonte = nullptr;
@@ -33,11 +33,13 @@ public:
         velocidadeDeslocamento = 0.02;
     }
 
-    Personagem(ALLEGRO_FONT* fnt, ALLEGRO_BITMAP* spr[]) {        
+    Personagem(ALLEGRO_FONT* fnt, ALLEGRO_BITMAP* spr[], auto x, auto y) {        
         Personagem();
         cor = ALCOLOR_WHITE;
         fonte = fnt;        
         img = spr[0];
+        this->x = x; 
+        this->y = y;
     }
 
     virtual bool mover() {

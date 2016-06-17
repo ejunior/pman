@@ -161,11 +161,10 @@ int main(int argc, char **argv) {
     img_botao_desligar = al_load_bitmap(".//res//logout.png");
     
     // lista de elementos gráficos em cena
-    std::list<Personagem *> atores;
-    
+    std::list<Personagem *> drawActorList;    
 
     Parmerinha *player = new Parmerinha(fonte, img_parmeira);
-    atores.push_back(player);
+    drawActorList.push_back(player);
 
     Trofeu **trofeis = new Trofeu*[QUANTIDADE_TROFEUS];
     for (int i = 0; i < QUANTIDADE_TROFEUS; i++)
@@ -186,11 +185,11 @@ int main(int argc, char **argv) {
 
         while (tick) {
             tick = false;
-            criaNovosTrofeis(atores, trofeis, fonte,  img_trofeu);
-            deletaTrofeisNoFimdaTela(atores, trofeis);
-            colisaoTrofeis(atores, player, trofeis);            
-            criaNovasBolas(atores, bolas, fonte, img_bola);
-            colisaoBolas(atores, player, bolas);
+            criaNovosTrofeis(drawActorList, trofeis, fonte,  img_trofeu);
+            deletaTrofeisNoFimdaTela(drawActorList, trofeis);
+            colisaoTrofeis(drawActorList, player, trofeis);            
+            criaNovasBolas(drawActorList, bolas, fonte, img_bola);
+            colisaoBolas(drawActorList, player, bolas);
             player->mover();
         }
 
@@ -243,7 +242,7 @@ int main(int argc, char **argv) {
                     tick = true;
             }
         }
-        draw(redraw, atores);
+        draw(redraw, drawActorList);
     }
 
     al_destroy_display(display); // Finaliza a janela

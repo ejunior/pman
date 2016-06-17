@@ -23,7 +23,7 @@ private:
 
 public:
 
-    Parmerinha(ALLEGRO_FONT* fnt, ALLEGRO_BITMAP* spr[]) : Personagem(fnt, spr) {
+    Parmerinha(auto fnt, auto spr[], auto x, auto y) : Personagem(fnt, spr, x, y) {
         velocidade = 0;
         fator_escala = 0.7;
         x = TELA_WIDTH / 2;
@@ -46,19 +46,19 @@ public:
             dir = d;
     }
 
-    bool mover() override {
+    bool mover(auto scrWt, auto scrHt) override {
         switch (dir) {
             case DIR_UP: if (y > 0) {
                     y -= velocidadeDeslocamento;
                     img = sprite_up;
                 }
                 break;
-            case DIR_RIGHT: if (x < TELA_WIDTH - spriteWidth()) {
+            case DIR_RIGHT: if (x < scrWt - spriteWidth()) {
                     x += velocidadeDeslocamento;
                     img = sprite_right;
                 }
                 break;
-            case DIR_DOWN: if (y < TELA_HEIGHT - spriteHeight()) {
+            case DIR_DOWN: if (y < scrHt - spriteHeight()) {
                     y += velocidadeDeslocamento;
                     img = sprite_down;
                 }
