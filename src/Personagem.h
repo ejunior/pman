@@ -33,7 +33,7 @@ public:
         velocidadeDeslocamento = 0.02;
     }
 
-    Personagem(ALLEGRO_FONT* fnt, ALLEGRO_BITMAP* spr[], auto x, auto y) {        
+    Personagem(ALLEGRO_FONT* fnt, ALLEGRO_BITMAP* spr[], auto x=0, auto y=0) {        
         Personagem();
         cor = ALCOLOR_WHITE;
         fonte = fnt;        

@@ -14,8 +14,10 @@
 
 #define QUANTIDADE_TROFEUS 500
 
-#define TELA_WIDTH al_get_display_width(display)
-#define TELA_HEIGHT al_get_display_height(display)
+//todo: cleanup
+//#define TELA_WIDTH al_get_display_width(display)
+//#define TELA_HEIGHT al_get_display_height(display)
+
 #define REFRESH_RATE 59
 
 //   w = al_get_display_width(display);

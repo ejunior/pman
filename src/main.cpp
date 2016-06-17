@@ -51,32 +51,32 @@ void colisaoBolas(list<Personagem *> &atores, Parmerinha *player, Bola **bol) {
     }
 }
 
-void criaNovasBolas(list<Personagem *> &atores, Bola **bol, ALLEGRO_FONT *f, ALLEGRO_BITMAP **b) {
+void criaNovasBolas(list<Personagem *> &atores, Bola **bol, ALLEGRO_FONT *f, ALLEGRO_BITMAP **b, auto scr_w, auto scr_h) {
     if (rand() % 100 == 1) {
         for (int i = 0; i < QUANTIDADE_TROFEUS; i++) {
             if (bol[i] == NULL) {
-                bol[i] = new Bola(f, b);
+                bol[i] = new Bola(f, b, scr_w, scr_h);
                 atores.push_back(bol[i]);
             }
         }
     }
 }
 
-void criaNovosTrofeis(list<Personagem *> &atores, Trofeu **tro, ALLEGRO_FONT *f,  ALLEGRO_BITMAP **b) {
+void criaNovosTrofeis(list<Personagem *> &atores, Trofeu **tro, ALLEGRO_FONT *f,  ALLEGRO_BITMAP **b, auto scr_h) {
     if (rand() % 10 == 1){ //criando trof�us novos
         for (int i = 0; i < QUANTIDADE_TROFEUS; i++) {
             if (tro[i] == NULL) {
-                tro[i] = new Trofeu(f, b);
+                tro[i] = new Trofeu(f, b, scr_h);
                 atores.push_back(tro[i]);
             }
         }
     }
 }
 
-void deletaTrofeisNoFimdaTela(list<Personagem *> &atores, Trofeu **tro) {
+void deletaTrofeisNoFimdaTela(list<Personagem *> &atores, Trofeu **tro, auto scr_w, auto scr_h) {
     for (int i = 0; i < QUANTIDADE_TROFEUS; i++){ //deletando os trofeus no fim da tela
         if (tro[i] != NULL){
-            if (!tro[i]->mover()) {                
+            if (!tro[i]->mover(scr_w,scr_h)) {                
                 atores.remove(tro[i]);
                 delete tro[i];
                 tro[i] = NULL;
@@ -85,10 +85,10 @@ void deletaTrofeisNoFimdaTela(list<Personagem *> &atores, Trofeu **tro) {
     }
 }
 
-void colisaoTrofeis(list<Personagem *> &atores, Parmerinha *ator, Trofeu **tro) {
+void colisaoTrofeis(list<Personagem *> &atores, Parmerinha *ator, Trofeu **tro, auto scr_w, auto scr_h) {
     for (int i = 0; i < QUANTIDADE_TROFEUS; i++){
         if (tro[i] != NULL){
-            tro[i]->mover();
+            tro[i]->mover(scr_w, scr_h);
         }
     }
 
@@ -128,20 +128,20 @@ void draw(bool &redraw, std::list<Personagem*> atores) {
             fps = fps_accum;
             fps_accum = 0;
             fps_time = t;
-
         }
         al_flip_display(); // Atualiza a tela
         redraw = false;
     }
-
 }
 
 
-int main(int argc, char **argv) {
-    
+int main_(int argc, char **argv) {
     
     std::srand(std::time(0));
     if (!inicializaTudo()) return -1;
+    
+    auto screen_width = al_get_display_width(display); 
+    auto screen_height = al_get_display_height(display);
     
     //carga das imagens 
     ALLEGRO_BITMAP *img_parmeira[5];
@@ -163,7 +163,7 @@ int main(int argc, char **argv) {
     // lista de elementos gráficos em cena
     std::list<Personagem *> drawActorList;    
 
-    Parmerinha *player = new Parmerinha(fonte, img_parmeira);
+    Parmerinha *player = new Parmerinha(fonte, img_parmeira, screen_width/2,screen_height/2 );
     drawActorList.push_back(player);
 
     Trofeu **trofeis = new Trofeu*[QUANTIDADE_TROFEUS];
@@ -185,12 +185,12 @@ int main(int argc, char **argv) {
 
         while (tick) {
             tick = false;
-            criaNovosTrofeis(drawActorList, trofeis, fonte,  img_trofeu);
-            deletaTrofeisNoFimdaTela(drawActorList, trofeis);
-            colisaoTrofeis(drawActorList, player, trofeis);            
-            criaNovasBolas(drawActorList, bolas, fonte, img_bola);
+            criaNovosTrofeis(drawActorList, trofeis, fonte,  img_trofeu, screen_height);
+            deletaTrofeisNoFimdaTela(drawActorList, trofeis, screen_width, screen_height);
+            colisaoTrofeis(drawActorList, player, trofeis, screen_width, screen_height);            
+            criaNovasBolas(drawActorList, bolas, fonte, img_bola, screen_width, screen_height);
             colisaoBolas(drawActorList, player, bolas);
-            player->mover();
+            player->mover(screen_width, screen_height);
         }
 
         while (!al_is_event_queue_empty(fila_eventos)) {
@@ -218,13 +218,12 @@ int main(int argc, char **argv) {
                                 al_set_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, true);
                             }else{
                                 al_set_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, false);
-                            }
+                            }                            
                         }    
                         break;
                     case ALLEGRO_KEY_Q:
                     case ALLEGRO_KEY_ESCAPE:
-                        exit(0);
-                        
+                        exit(0);                        
                 }
             } else if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){ // click no mouse
                 if (evento.mouse.x > 0 && evento.mouse.x < 20 &&
@@ -232,6 +231,8 @@ int main(int argc, char **argv) {
                     exit(0);
             } else if (evento.type == ALLEGRO_EVENT_DISPLAY_RESIZE) {
                 al_acknowledge_resize(display);
+                screen_width  = al_get_display_width(display);
+                screen_height = al_get_display_height(display);
                 redraw = true;
             } else if (evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { // click no mouse
                 exit(0);

@@ -26,8 +26,8 @@ public:
     Parmerinha(auto fnt, auto spr[], auto x, auto y) : Personagem(fnt, spr, x, y) {
         velocidade = 0;
         fator_escala = 0.7;
-        x = TELA_WIDTH / 2;
-        y = TELA_HEIGHT / 2;
+        this->x = x;
+        this->y = y;
         dir = -1;
         velocidadeDeslocamento = VELOCIDADE_ATOR;
         
@@ -46,19 +46,19 @@ public:
             dir = d;
     }
 
-    bool mover(auto scrWt, auto scrHt) override {
+    bool mover(auto screen_width, auto screen_height) override {
         switch (dir) {
             case DIR_UP: if (y > 0) {
                     y -= velocidadeDeslocamento;
                     img = sprite_up;
                 }
                 break;
-            case DIR_RIGHT: if (x < scrWt - spriteWidth()) {
+            case DIR_RIGHT: if (x < screen_width - spriteWidth()) {
                     x += velocidadeDeslocamento;
                     img = sprite_right;
                 }
                 break;
-            case DIR_DOWN: if (y < scrHt - spriteHeight()) {
+            case DIR_DOWN: if (y < screen_height - spriteHeight()) {
                     y += velocidadeDeslocamento;
                     img = sprite_down;
                 }

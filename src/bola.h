@@ -11,12 +11,14 @@ private:
 
 public:
 
-    Bola(ALLEGRO_FONT* fnt, ALLEGRO_BITMAP *bmp[]):Personagem(fnt, bmp){
+    Bola(ALLEGRO_FONT* fnt, ALLEGRO_BITMAP *bmp[], auto scr_h, auto scr_w):Personagem(fnt, bmp, x, y){
         cor = ALCOLOR_RED;
         fator_escala = 1;        
         // evita que a figura apareça na tela pela metade
-        x = rand() % ((int) TELA_WIDTH - (int) round(spriteWidth()));
-        y = rand() % ((int) TELA_HEIGHT - (int) round(spriteHeight()));        
+        this->x = x;
+        this->y = y;
+        x = rand() % ((int) scr_h - (int) round(spriteWidth()));
+        y = rand() % ((int) scr_w - (int) round(spriteHeight()));        
     }
 
     virtual ~Bola(){}

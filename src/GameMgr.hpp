@@ -16,11 +16,14 @@
 
 
 #include <list>
+
+// random
 #include <cstdlib>
 #include <ctime>
 
 #include <allegro5/allegro5.h>
 #include<allegro5/allegro_image.h>
+#include<allegro5/allegro_ttf.h>
 
 #include "Personagem.h"
 #include "parmerinha.h"
@@ -38,12 +41,17 @@ protected:
     bool _redraw = true;
     bool _tick = true;
     
-    const ALLEGRO_FONT *fonte = NULL;
-    const ALLEGRO_DISPLAY *display = NULL;
+    ALLEGRO_FONT *fonte = NULL;
+    ALLEGRO_DISPLAY *display = NULL;
     
-    std::list<Personagem *> drawActorList;
+    int screen_width; 
+    int screen_height;
     
     
+    std::list<Personagem *> draw_actor_list;
+    
+    ALLEGRO_TIMER *draw_timer;
+    ALLEGRO_TIMER *logic_timer;
     
     Parmerinha *player = nullptr;
     
@@ -53,8 +61,9 @@ public:
     int run();    
     
 private:
-    int load();
+    bool load();
     void update();
+    void processInput();
     void redraw();
     
     load_resources();

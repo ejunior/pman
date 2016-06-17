@@ -19,7 +19,7 @@ GameMgr::GameMgr() {
 GameMgr::~GameMgr() {
 }
 
-int GameMgr::load() {
+bool GameMgr::load() {
     // iniciar gerador de números randômicos
     std::srand(std::time(0));
 
@@ -42,6 +42,10 @@ int GameMgr::load() {
         fprintf(stderr, "falha ao criar a tela!\n");
         return -1;
     }
+    
+    screen_width = al_get_display_width(display); 
+    screen_height = al_get_display_height(display);
+    
 
     // inicializando uso do teclado
     if (!al_install_keyboard()) {
@@ -67,29 +71,26 @@ int GameMgr::load() {
     al_register_event_source(fila_eventos, al_get_display_event_source(display));
 
 
-    timer = al_create_timer(1.0 / REFRESH_RATE);
-    al_start_timer(timer);
-    al_register_event_source(fila_eventos, al_get_timer_event_source(timer));
+    draw_timer = al_create_timer(1.0 / REFRESH_RATE);
+    al_start_timer(draw_timer);
+    al_register_event_source(fila_eventos, al_get_timer_event_source(draw_timer));
 
-    timer2 = al_create_timer(1.0 / 59);
-    al_start_timer(timer2);
-    al_register_event_source(fila_eventos, al_get_timer_event_source(timer2));
+    logic_timer = al_create_timer(1.0 / 59);
+    al_start_timer(logic_timer);
+    al_register_event_source(fila_eventos, al_get_timer_event_source(logic_timer));
 
     al_init_primitives_addon(); // inicializando o trabalho com primitivas gr�ficas
     al_init_image_addon();
 
-    // Inicializa��o do add-on para uso de fontes
+    // Inicia o add-on para uso de fontes
     al_init_font_addon();
-    // Inicializa��o do add-on para uso de fontes True Type
+    // Inicia o add-on para uso de fontes True Type
     al_init_ttf_addon();
 
     // Carregando o arquivo de fonte, o arquivo de fonte deve estar na pasta do projeto
     
-
     return true;
 
-
-    return 0;
 }
 
 int GameMgr::load_resources() {
@@ -109,9 +110,12 @@ int GameMgr::load_resources() {
     return 0;
 }
 
-void GameMgr::update() {
-    ALLEGRO_EVENT evento;
+void GameMgr::update(){
+    
+}
 
+void GameMgr::processInput() {
+    ALLEGRO_EVENT evento;
     while (!al_is_event_queue_empty(fila_eventos)) {
         al_clear_to_color(al_map_rgb(0, 0, 0)); // Colorindo a janela de preto
         al_wait_for_event(fila_eventos, &evento);
@@ -151,24 +155,41 @@ void GameMgr::update() {
                 exit(0);
         } else if (evento.type == ALLEGRO_EVENT_DISPLAY_RESIZE) {
             al_acknowledge_resize(display);
-            redraw = true;
+            screen_width = al_get_display_width(display); 
+            screen_height = al_get_display_height(display);
+            _redraw = true;
         } else if (evento.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { // click no mouse
             exit(0);
         } else if (evento.type == ALLEGRO_EVENT_TIMER) {
-            if (evento.timer.source == timer)
-                redraw = true;
-            else if (evento.timer.source == timer2)
+            if (evento.timer.source == draw_timer)
+                _redraw = true;
+            else if (evento.timer.source == logic_timer)
                 _tick = true;
         }
 
-        draw(_redraw, drawActorList);
+        redraw();
     }
 
     al_destroy_display(display); // Finaliza a janela
-    return 0;
 }
 
 void GameMgr::redraw() {
-
 }
 
+int GameMgr::run(){
+    load();    
+    while(true){
+        update();
+        processInput();
+        redraw();
+    }        
+    return 0;
+}
+
+int main(int argc, char **argv){
+    
+    auto gm = new GameMgr();
+    gm->run();
+    
+    return 0;
+}
